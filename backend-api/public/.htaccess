@@ -1,0 +1,7 @@
+# DESC: Enable URL Re-writing
+# NOTE: All requests for files / directories that do not exist
+# ... on the server are redirected to 'index.php'
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

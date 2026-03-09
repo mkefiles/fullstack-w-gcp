@@ -1,0 +1,77 @@
+services:
+  # NOTE: This is my PROD base-image of the PHP-Apache Image, which
+  # ... specifies the platform because GCP needs it to support AMD64
+  # TODO: Comment / uncomment when switching between DEV / PROD
+  php-backend-gcp:
+    container_name: php-backend-gcp
+    platform: linux/amd64
+    build:
+      context: ./backend-api
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend-api:/var/www/html
+
+  # NOTE: The 'php-backend' service includes PHP-Apache, a PHP Slim instance (for
+  # ... the API routing) and necessary extension(s) / dependencies for interacting
+  # ... with Apache Kafka
+  # TODO: Comment / uncomment when switching between PROD / DEV
+  # php-backend:
+  #   container_name: php-backend
+  #   build:
+  #     context: ./backend-api
+  #     dockerfile: .docker/Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./backend-api:/var/www/html
+
+  # NOTE: A U.I. for Kafka (use http://localhost:8080 to access)
+  # NOTE: When `DYNAMIC_CONFIG_ENABLED` is set to `true`, any changes
+  # ... made in the U.I. will save to the 'dynamic_config.yaml' (see
+  # ... the volume mounting config below)
+  kafka-ui:
+    container_name: "kafka-ui"
+    image: "kafbat/kafka-ui:main"
+    ports:
+      - "8080:8080"
+    depends_on: # Added for Kafka / Kafbat comm.'s
+      - "kafka-broker"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-broker:29092" # IMPORTANT: Use this when configuring the UI
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      DYNAMIC_CONFIG_ENABLED: "true"
+    volumes:
+      - ./kafka-ui/config.yml:/etc/kafkaui/dynamic_config.yaml
+
+  # NOTE: An Apache Kafka instance running in kRaft Combined Mode without
+  # ... secure communications (i.e., using Plaintext instead of SSL)
+  # kafka-broker:
+  #   image: "apache/kafka:4.1.1"
+  #   hostname: "kafka-broker"
+  #   container_name: "kafka-broker"
+  #   ports:
+  #     - "9092:9092" # Was "80:80" -- Added for Kafka / Kafbat comm.'s
+  #     - "9997:9997"
+  #   environment:
+  #     KAFKA_BROKER_ID: 1 # Added for Kafka / Kafbat comm.'s
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+  #     KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka-broker:29092,PLAINTEXT_HOST://kafka-broker:9092"
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #     KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  #     KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+  #     KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  #     KAFKA_JMX_PORT: 9997
+  #     KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka0 -Dcom.sun.management.jmxremote.rmi.port=9997
+
+  #     KAFKA_PROCESS_ROLES: "broker, controller"
+  #     KAFKA_NODE_ID: 1
+  #     KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka-broker:29093"
+  #     KAFKA_LISTENERS: "PLAINTEXT://kafka-broker:29092,CONTROLLER://kafka-broker:29093,PLAINTEXT_HOST://0.0.0.0:9092"
+  #     KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+  #     KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+  #     KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+  #     CLUSTER_ID: "KNUqXp8IQQm4lxYLoBeyEA" # Added for Kafka / Kafbat comm.'s

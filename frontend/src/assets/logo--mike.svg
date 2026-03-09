@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 500 275" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-1287,0)">
+        <g id="Logo--Mike" transform="matrix(1.36607,0,0,0.718995,-813.406,51.6285)">
+            <rect x="1537.56" y="-71.807" width="366.015" height="382.478" style="fill:none;"/>
+            <g id="GRP-Logo" transform="matrix(2.16125,0,0,2.44794,-1970.64,-172.931)">
+                <g id="Shape-03" transform="matrix(4.938,0,0,13.9605,960.793,-3377.95)">
+                    <rect x="159.99" y="245.041" width="8.113" height="10.959" style="fill:rgb(49,48,55);"/>
+                </g>
+                <g id="Shape-02" transform="matrix(0.323496,0,0,0.764957,1132.87,-57.49)">
+                    <path d="M1644.88,131.284L1713.1,284.5L1842.17,284.5L1910.23,131.284L1822.64,131.284L1777.56,231.284L1733.06,131.284L1644.88,131.284Z" style="fill:rgb(49,48,55);"/>
+                </g>
+                <g id="Shape-01" transform="matrix(4.938,0,0,13.9605,834.891,-3377.95)">
+                    <rect x="159.99" y="245.041" width="8.113" height="10.959" style="fill:rgb(49,48,55);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

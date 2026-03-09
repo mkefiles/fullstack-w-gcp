@@ -1,0 +1,21 @@
+# DESC: Build PROD Image off of DEV
+# NOTE: This should remove the need for re-downloading
+# ... any required dependencies
+FROM full-stack-php-backend-gcp:latest
+
+# DESC: Set Image meta-data
+LABEL authors="Mike Files"
+LABEL maintainer="Mike Files"
+
+# DESC: Update Apache Configuration
+# NOTE: This appends the necessary ServerName configuration
+# ... to the end of the 'apache2.conf' file
+RUN echo "\n\nServerName www.mike-files.com" >> /etc/apache2/apache2.conf
+
+# DESC: Copy project contents to Image
+# NOTE: If the Dockerfile is accessed from the backends root
+# ... directory (i.e, not a sub-directory within 'backend')
+# ... then the following commands ensure that files from
+# ... the backend-root <src> are copied to the <workdir>
+WORKDIR /var/www/html/
+COPY . .
