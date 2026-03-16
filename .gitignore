@@ -4,3 +4,6 @@ Docker-for-PHP.md
 dynamic_config.yaml
 logos.afdesign
 _Apache-Kafka-w-PHP.pages
+
+.DS_Store
+**/.DS_Store
